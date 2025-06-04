@@ -8,24 +8,24 @@ Matriculation: 11038716
 This folder contains Python examples demonstrating both **violations** and **correct applications** of the SOLID principles of object-oriented design.
 
 Each file is labeled:
-- ✅ `_good.py` → Good implementation following the principle
-- ❌ `_bad.py` → Bad implementation violating the principle
+-  `_good.py` → Good implementation following the principle
+-  `_bad.py` → Bad implementation violating the principle
 
 ---
 
-## 🔠 SOLID Principles Overview
+## SOLID Principles Overview
 
-| Principle | File Prefix | Description |
-|----------|--------------|-------------|
-| **S** – SRP  | `SRP_`  | Single Responsibility Principle — one reason to change |
-| **O** – OCP  | `OCP_`  | Open/Closed Principle — open for extension, closed for modification |
-| **L** – LSP  | `LSP_`  | Liskov Substitution Principle — subtypes should be substitutable |
-| **I** – ISP  | `ISP_`  | Interface Segregation Principle — don't force unused methods |
-| **D** – DIP  | `DIP_`  | Dependency Inversion Principle — depend on abstractions |
+| Principle    | File Prefix  | Description |
+|--------------|--------------|-------------|
+| **S** – SRP  | `SRP_`       | Single Responsibility Principle — one reason to change |
+| **O** – OCP  | `OCP_`       | Open/Closed Principle — open for extension, closed for modification |
+| **L** – LSP  | `LSP_`       | Liskov Substitution Principle — subtypes should be substitutable |
+| **I** – ISP  | `ISP_`       | Interface Segregation Principle — don't force unused methods |
+| **D** – DIP  | `DIP_`       | Dependency Inversion Principle — depend on abstractions |
 
 ---
 
-## 📂 File List
+##  File Structure
 
 ```text
 SOLID_solutions/
