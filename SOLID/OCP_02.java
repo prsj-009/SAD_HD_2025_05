@@ -1,37 +1,47 @@
 package SOLID;
 
-public class OCP_02 {
+/**
+ * 👇 Originally, Shape was just a marker (empty) and logic used instanceof.
+ * We refactor it to have an abstract method for area computation.
+ */
+abstract class DrawingShape {
+    public abstract double computeArea();
+}
 
-    /*
-     * TASK:
-     * (classical task)
-     * How to add other shapes without violating the OCP
-     * (Open/Closed Principle)?
-     * The interface/class/method bodies are empty by purpose
-     * and there is no main provided.
-     */
-    
-    public static abstract class Shape {
+/**
+ * 👇 Each shape provides its own implementation.
+ * Now we can add new shapes (e.g., Triangle) without touching Area logic.
+ */
+class Rectangle extends DrawingShape {
+    double width, height;
+
+    Rectangle(double w, double h) {
+        width = w;
+        height = h;
     }
 
-    public static class Square extends Shape {
+    public double computeArea() {
+        return width * height;
+    }
+}
+
+class Circle extends DrawingShape {
+    double radius;
+
+    Circle(double r) {
+        radius = r;
     }
 
-    public static class Circle extends Shape {
+    public double computeArea() {
+        return Math.PI * radius * radius;
     }
+}
 
-    public static class AreaCalculator {
-        public double getArea(Shape shape) {
-            double areaOfShape = 0.0;
-            if (shape instanceof Square) {
-                // calculate the area of a Square
-                areaOfShape = 0.0;
-            }
-            else if (shape instanceof Circle) {
-                // calculate the area of a Circle
-                areaOfShape = 0.0;
-            }
-            return areaOfShape;
-        }
+/**
+ * 👇 Now open for extension via new shapes, closed for modification!
+ */
+class DrawingArea {
+    public double measure(DrawingShape s) {
+        return s.computeArea();
     }
 }
