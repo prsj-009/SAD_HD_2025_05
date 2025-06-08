@@ -1,31 +1,38 @@
 package SOLID;
 
-public class OCP_01 {
+/**
+ * 👇 Instead of using `if-else` on customer type, we use interfaces.
+ * This allows extending discount logic without modifying existing code.
+ */
+interface CustomerType {
+    double getDiscount(double total);
+}
 
-    /*
-     * TASK:
-     * How to add a new discount type (customerType) without
-     * violating OCP (Open/Closed Principle)?
-     */
-    
-    public static class DiscountCalculator {
-        public double calculateDiscount(String customerType, double amount) {
-            if (customerType.equals("Regular")) {
-                return amount * 0.1;
-            }
-            else if (customerType.equals("Premium")) {
-                return amount * 0.2;
-            }
-            return 0.0;
-        }
-    }
-
-    public static void main(String[] args) {
-        DiscountCalculator calculator = new DiscountCalculator();
-        double regularDiscount = calculator.calculateDiscount("Regular", 100.0);
-        double premiumDiscount = calculator.calculateDiscount("Premium", 100.0);
-
-        System.out.println("Regular Discount: " + regularDiscount);
-        System.out.println("Premium Discount: " + premiumDiscount);
+class BronzeCustomer implements CustomerType {
+    public double getDiscount(double total) {
+        return total * 0.05;
     }
 }
+
+class SilverCustomer implements CustomerType {
+    public double getDiscount(double total) {
+        return total * 0.15;
+    }
+}
+
+/**
+ * 👇 Uses polymorphism so we don't touch this class when new types are added.
+ */
+class BillProcessor {
+    public double processDiscount(CustomerType type, double total) {
+        return type.getDiscount(total);
+    }
+}
+
+public class OCP_01 {
+    public static void main(String[] args) {
+        BillProcessor bp = new BillProcessor();
+        System.out.println("Silver: " + bp.processDiscount(new SilverCustomer(), 150));
+    }
+}
+
