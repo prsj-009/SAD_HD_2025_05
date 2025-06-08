@@ -3,45 +3,48 @@ package SOLID;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class SRP_01 {
+/**
+ * 👇 This class only stores user data.
+ * Originally, it also saved to a file, which is a second responsibility.
+ */
+class User {
+    private final String fullName;
+    private final String contact;
 
-    /*
-     * TASK:
-     * Please apply to the following class "User" the
-     * SRP (Single Responsibility Principle)
-     */
-
-    public static class User {
-        private String name;
-        private String email;
-    
-        public User(String name, String email) {
-            this.name = name;
-            this.email = email;
-        }
-
-        public String getName() {
-            return name;
-        }
-        
-        public String getEmail() {
-            return email;
-        }
-
-        public void saveToFile() {
-            try (FileWriter fileWriter = new FileWriter(name + ".txt")) {
-                fileWriter.write("Name: " + name + "\n");
-                fileWriter.write("Email: " + email + "\n");
-                System.out.println("User data saved successfully!");
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public User(String fullName, String contact) {
+        this.fullName = fullName;
+        this.contact = contact;
     }
-            
-    public static void main(String[] args) {
-        User user = new User("Clemens", "clemens@company.com");
-        user.saveToFile();
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getContact() {
+        return contact;
     }
 }
+
+/**
+ * 👇 New class added to handle file I/O separately.
+ * This separates concerns: data vs. persistence.
+ */
+class UserFileManager {
+    public void store(User user) {
+        try (FileWriter writer = new FileWriter(user.getFullName() + "_info.txt")) {
+            writer.write("Name: " + user.getFullName() + "\n");
+            writer.write("Email: " + user.getContact() + "\n");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+
+public class SRP_01 {
+    public static void main(String[] args) {
+        User u = new User("Alice", "alice@domain.com");
+        UserFileManager manager = new UserFileManager();
+        manager.store(u); // Delegating file saving responsibility
+    }
+}
+
