@@ -1,40 +1,39 @@
 package SOLID;
 
+/**
+ * 👇 Generalized notification mechanism
+ */
+interface AlertSystem {
+    void sendAlert();
+}
+
+/**
+ * 👇 Concrete email or SMS notification
+ */
+class SMSNotifier implements AlertSystem {
+    public void sendAlert() {
+        System.out.println("Sending SMS...");
+    }
+}
+
+/**
+ * 👇 Employee now depends on abstraction (AlertSystem).
+ */
+class Person {
+    private final AlertSystem notifier;
+
+    public Person(AlertSystem notifier) {
+        this.notifier = notifier;
+    }
+
+    public void notifyPerson() {
+        notifier.sendAlert(); // works for any AlertSystem
+    }
+}
+
 public class DIP_02 {
-
-    /*
-     * TASK:
-     * The class Employee violates the DIP (Dependency Inversion Principle).
-     * Fix this!
-     */
-    
-    public static interface Notification {
-        void doNotify();
-    }
-
-    public static class EmailNotification implements Notification {
-        @Override
-        public void doNotify() {
-            System.out.println("Sending notification via email!");
-        }
-    }
-
-    public static class Employee {
-        private EmailNotification emailNotification;
-
-        // Dependency Injection (again) composition
-        public Employee(EmailNotification emailNotification) {
-            this.emailNotification = emailNotification;
-        }
-    
-        public void notifyEmployee() {
-            emailNotification.doNotify();
-        }
-    }
-
     public static void main(String[] args) {
-        EmailNotification emailNotification = new EmailNotification();
-        Employee employee = new Employee(emailNotification);
-        employee.notifyEmployee();
+        Person p = new Person(new SMSNotifier());
+        p.notifyPerson();
     }
 }
